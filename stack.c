@@ -11,10 +11,9 @@ void push(stack_t **stack, unsigned int line_number)
 	char *value_str = strtok(NULL, " \t\n");
 	stack_t *top = malloc(sizeof(stack_t));
 
-
 	if (value_str == NULL || !is_integer(value_str))
 	{
-		fprintf(stderr, "L%u: usage: push integer note\n", line_number);
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
