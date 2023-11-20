@@ -2,20 +2,32 @@
 /**
  *is_integer - function to check if string is digit
  *@str: string to be checked
+ *@line_number: line number from file
  *Return: 1 on sucess
  */
 
-int is_integer(const char *str)
+void is_integer(const char *str, unsigned int line_number)
 {
-	while (*str != '\0')
+	int i = 0;
+
+	if (str == NULL || *str == '\0')
 	{
-		if (!isdigit(*str))
-		{
-			return (0);
-		}
+		err_txt(5, line_number);
+	}
+
+	if (*str == '-' || *str == '+')
+	{
 		str++;
 	}
-	return (1);
+
+	while (str[i] != '\0')
+	{
+		if (isdigit(str[i]) == 0)
+		{
+			err_txt(5, line_number);
+		}
+		i++;
+	}
 }
 
 /**
@@ -25,12 +37,15 @@ int is_integer(const char *str)
 
 void free_stack(stack_t **stack)
 {
+	stack_t *current = *stack;
 	stack_t *temp;
 
-	while (*stack != NULL && (*stack)->next)
+	while (current != NULL)
 	{
-		temp = (*stack)->next;
-		free(*stack);
-		*stack = temp;
+		temp = current->next;
+		free(current);
+		current = temp;
 	}
+
+	*stack = NULL;
 }

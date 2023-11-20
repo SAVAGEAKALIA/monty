@@ -8,31 +8,22 @@
 void push(stack_t **stack, unsigned int line_number)
 {
 	int value;
+	stack_t *top;
 	char *value_str = strtok(NULL, " \t\n");
-	stack_t *top = malloc(sizeof(stack_t));
 
-	if (value_str == NULL || !is_integer(value_str))
-	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+	is_integer(value_str, line_number);
 
-	if (top == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed, push\n");
-		exit(EXIT_FAILURE);
-	}
 	value = atoi(value_str);
 
-	top->n = value;
+	top = createNode(value);
 	top->next = *stack;
 
-	if (*stack == NULL)
+	if (*stack != NULL)
 	{
-		*stack = top;
+		(*stack)->prev = top;
 	}
 
-	*stack = top;
+	*stack  = top;
 }
 
 /**
@@ -49,8 +40,7 @@ void pop(stack_t **stack, unsigned int line_number)
 
 	if (*stack == NULL)
 	{
-		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
-		exit(EXIT_FAILURE);
+		err_txt2(2, line_number);
 	}
 
 	if (top->next == NULL)
@@ -103,8 +93,7 @@ void pint(stack_t **stack, unsigned int line_number)
 
 	if (*stack == NULL)
 	{
-		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
-		exit(EXIT_FAILURE);
+		err_txt2(1, line_number);
 	}
 
 	printf("%d\n", print_top->n);
@@ -123,8 +112,7 @@ void swap(stack_t **stack, unsigned int line_number)
 
 	if (top == NULL || top->next == NULL)
 	{
-		fprintf(stderr, "L%u: can't swap, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
+		err_txt(6, line_number);
 	}
 
 	temp = top->n;

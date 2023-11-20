@@ -32,11 +32,8 @@ void enqueue(stack_t **stack, unsigned int line_number)
 	int value;
 	stack_t *last = malloc(sizeof(stack_t));
 
-	if (value_str == NULL || !is_integer(value_str))
-	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+	(void)line_number;
+
 	if (last == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");

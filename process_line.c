@@ -15,15 +15,15 @@ void process_line(char *line, unsigned int line_number, stack_t **stack)
 	opcode = strtok(line_copy, " \t\n");
 	if (opcode == NULL || opcode[0] == '#')
 	{
+		free(line_copy);
 		return;
 	}
 
 	instruction = find_instruction(opcode);
 	if (instruction == NULL)
 	{
-		fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+		err_txt(3, line_number, opcode);
 		free(line_copy);
-		exit(EXIT_FAILURE);
 	}
 
 	instruction->f(stack, line_number);
@@ -41,12 +41,16 @@ instruction_t *find_instruction(const char *opcode)
 	int i;
 
 	static instruction_t instructions[] = {
-	{"push", push},
 	{"pall", pall},
+	{"push", push},
 	{"pop",  pop},
 	{"pint", pint},
 	{"swap", swap},
 	{"add", add},
+	{"sub", sub},
+	{"div", divide},
+	{"mul", mul},
+	{"mod", mod},
 	{"nop", nop},
     /* ... other opcodes ... */
 	{NULL, NULL} /* This is a sentinel value to mark the end of the array */

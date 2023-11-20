@@ -1,7 +1,9 @@
 #ifndef _MONTY_H_
 #define _MONTY_H_
 #define _GNU_SOURCE
+#include <stdarg.h>
 #include <stdio.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -36,7 +38,15 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-extern instruction_t *instructions;
+extern instruction_t instructions;
+void err_txt(int error_code, ...);
+void err_txt2(int error_code, ...);
+void err_txt3(int error_code, ...);
+stack_t *createNode(int value);
+
+/*mode*/
+void stack(stack_t **stack, unsigned int line_number);
+void queue(stack_t **stack, unsigned int line_number);
 
 /* stack.c */
 void pall(stack_t **stack, unsigned int line_number);
@@ -48,6 +58,16 @@ void swap(stack_t **stack, unsigned int line_number);
 /* Stack2.c */
 void add(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
+void sub(stack_t **stack, unsigned int line_number);
+void divide(stack_t **stack, unsigned int line_number);
+void mul(stack_t **stack, unsigned int line_number);
+
+/* stack3.c */
+void mod(stack_t **stack, unsigned int line_number);
+void pchar(stack_t **stack, unsigned int line_number);
+void pstr(stack_t **stack, unsigned int line_number);
+void rotl(stack_t **stack, unsigned int line_number);
+void rotr(stack_t **stack, unsigned int line_number);
 
 /* queue.c */
 void dequeue(stack_t **stack, unsigned int line_number);
@@ -58,6 +78,6 @@ void process_line(char *line, unsigned int line_number, stack_t **stack);
 instruction_t *find_instruction(const char *opcode);
 
 /* help_funct */
-int is_integer(const char *str);
+void is_integer(const char *str, unsigned int line_number);
 void free_stack(stack_t **stack);
 #endif /* MONTY.H */
