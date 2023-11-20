@@ -66,7 +66,7 @@ void pstr(stack_t **stack, unsigned int line_number)
 		return;
 	}
 
-	while (top != NULL && top->n != 0)
+	while (top != NULL && top->next != NULL && top->n != 0)
 	{
 		if ((top->n < 65) || (top->n > 122))
 		{
