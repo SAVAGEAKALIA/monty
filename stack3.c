@@ -63,7 +63,7 @@ void pstr(stack_t **stack, unsigned int line_number)
 	if (top == NULL)
 	{
 		printf("\n");
-		return;
+		/*return;*/
 	}
 
 	while (top != NULL && top->next != NULL && top->n != 0)
