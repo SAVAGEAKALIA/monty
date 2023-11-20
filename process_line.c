@@ -22,11 +22,14 @@ void process_line(char *line, unsigned int line_number, stack_t **stack)
 	instruction = find_instruction(opcode);
 	if (instruction == NULL)
 	{
+		free_stack(stack);
 		err_txt(3, line_number, opcode);
-		free(line_copy);
+	}
+	else
+	{
+		instruction->f(stack, line_number);
 	}
 
-	instruction->f(stack, line_number);
 	free(line_copy);
 }
 
@@ -52,7 +55,10 @@ instruction_t *find_instruction(const char *opcode)
 	{"mul", mul},
 	{"mod", mod},
 	{"nop", nop},
-    /* ... other opcodes ... */
+	{"pchar", pchar},
+	{"pstr", pstr},
+	{"rotl", rotl},
+	{"rotr", rotr},
 	{NULL, NULL} /* This is a sentinel value to mark the end of the array */
 };
 
