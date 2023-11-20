@@ -63,15 +63,11 @@ void pstr(stack_t **stack, unsigned int line_number)
 	if (top == NULL)
 	{
 		printf("\n");
-		/*return;*/
+		return;
 	}
 
-	while (top != NULL && top->next != NULL && top->n != 0)
+	while (top != NULL && top->n != 0 && (top->n >= 32 && top->n <= 127))
 	{
-		if ((top->n < 65) || (top->n > 122))
-		{
-			return;
-		}
 		printf("%c", top->n);
 		top = top->next;
 	}
